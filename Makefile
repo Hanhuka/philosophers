@@ -6,12 +6,12 @@
 #    By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 14:54:26 by ralves-g          #+#    #+#              #
-#    Updated: 2022/11/15 11:57:05 by ralves-g         ###   ########.fr        #
+#    Updated: 2022/11/15 17:16:20 by ralves-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	gcc
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror -fsanitize=address
 RM			=	rm -f
 
 NAME		=	philo
@@ -21,6 +21,8 @@ SRCS_		=	\
 				philosophers.c \
 				args_check.c \
 				init_philos.c \
+				philo_actions.c \
+				time_handle.c \
 				utils.c
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
