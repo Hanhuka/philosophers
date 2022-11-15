@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:39:18 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/10 16:41:02 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:57:53 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 typedef struct s_fork
 {
-	int				in_use;
-	pthread_mutex_t	f;
+	int				*in_use;
+	pthread_mutex_t	*f;
 }	t_forks;
 
 typedef struct s_data
@@ -36,11 +36,12 @@ typedef struct s_data
 
 typedef struct s_philo
 {
+	pthread_t		id;
 	int				last_eat;
 	int				times_eat;
 	int				nbr;
-	pthread_mutex_t	*r;
-	pthread_mutex_t	*l;
+	t_forks			r;
+	t_forks			l;
 	int				*dead;
 	t_data			d;
 }	t_philo;
@@ -55,6 +56,13 @@ int			is_number(char *str);
 void		not_number(int nbr);
 void		check_arg_count(int ac);
 void		save_args(int ac, char **av, t_data *d);
-void		check_args(int ac, char **av, t_philo *p);
+void		check_args(int ac, char **av, t_data *d);
+
+//init_philos.c
+void		create_forks(t_forks	**forks, int n_phil);
+void		create_philos(t_philo **p, t_data d, t_forks **forks);
+
+//philosophers.c
+void		*philo_routine(void *phil);
 
 #endif

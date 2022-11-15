@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:36:30 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/10 16:40:45 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:59:16 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ void	save_args(int ac, char **av, t_data *d)
 		(*d).n_eat = -1;
 	else
 		(*d).n_eat = ft_atoi(av[5]);
+	printf("n_phil  = %d\n", (*d).n_phil);
+	printf("t_die   = %d\n", (*d).t_die);
+	printf("t_eat   = %d\n", (*d).t_eat);
+	printf("t_sleep = %d\n", (*d).t_sleep);
 }
 
-void	check_args(int ac, char **av, t_philo *p)
+void	check_args(int ac, char **av, t_data *d)
 {
 	int	i;
 
@@ -91,5 +95,5 @@ void	check_args(int ac, char **av, t_philo *p)
 		}
 		i++;
 	}
-	save_args(ac, av, p);
+	save_args(ac, av, d);
 }
