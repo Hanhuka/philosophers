@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:39:18 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/15 16:53:39 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:29:56 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct s_fork
 {
 	int				*in_use;
 	pthread_mutex_t	*check;
-	pthread_mutex_t	*f;
 }	t_forks;
 
 typedef struct s_data
 {
+	unsigned long		start;
 	int					n_phil;
 	unsigned long		t_die;
 	int					t_eat;
@@ -43,7 +43,7 @@ typedef struct s_philo
 {
 	pthread_t		id;
 	unsigned long	t_start;
-	int				last_eat;
+	unsigned long	last_eat;
 	int				times_eat;
 	int				nbr;
 	t_forks			r;
@@ -51,7 +51,7 @@ typedef struct s_philo
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*d_check;
 	int				*dead;
-	t_data			data;
+	t_data			*data;
 }	t_philo;
 
 //philosophers.c
@@ -74,12 +74,14 @@ void			check_args(int ac, char **av, t_data *d);
 
 //init_philos.c
 void			create_forks(t_forks	**forks, int n_phil);
-void			create_philos(t_philo **p, t_data d, t_forks **forks, \
+void			create_philos(t_philo **p, t_data *d, t_forks **forks, \
 				int *dead);
 
 //philo_actions.c
 int				philo_eat(t_philo *p);
 int				philo_sleep(t_philo *p, unsigned long action);
+
+//print_actions.c
 void			print_action_eat(t_philo *p);
 void			print_action(t_philo *p, char *message);
 

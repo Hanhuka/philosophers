@@ -6,44 +6,59 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:48:23 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/15 17:15:59 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:30:25 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-// void	take_forks(t_philo *p)
-// {
-// 	pthread_mutex_lock((*p).r.check);
-// 	if (!((*p).r.in_use))
-// 	{
-// 		(*p).r.in_use = 1;
-		
-// 	}
-// 	pthread_mutex_unlock((*p).r.check);
-// }
+void	take_forks(t_philo *p)
+{
+	while (!check_add_death(p))
+	{
+		pthread_mutex_lock((*p).r.check);
+		if (!((*(*p).r.in_use)))
+		{
+			*((*p).r.in_use) = 1;
+			pthread_mutex_unlock((*p).r.check);
+			break ;
+		}
+		pthread_mutex_unlock((*p).r.check);
+	}
+	if (!check_death(p))
+		print_action(p, "has taken a fork\n");
+	while (!check_add_death(p))
+	{
+		pthread_mutex_lock((*p).l.check);
+		if (!((*(*p).l.in_use)))
+		{
+			*((*p).l.in_use) = 1;
+			pthread_mutex_unlock((*p).l.check);
+			break ;
+		}
+		pthread_mutex_unlock((*p).l.check);
+	}
+}
+
+void	philo_drop_forks(t_philo *p)
+{
+	pthread_mutex_lock((*p).l.check);
+	*((*p).l.in_use) = 0;
+	pthread_mutex_unlock((*p).l.check);
+	pthread_mutex_lock((*p).r.check);
+	*((*p).r.in_use) = 0;
+	pthread_mutex_unlock((*p).r.check);
+}
 
 int	philo_eat(t_philo *p)
 {
-	// take_forks(*p);
-	pthread_mutex_lock((*p).r.f);
-	if (!check_death(p))
-		print_action(p, "has taken a fork\n");
-	else
-		return (pthread_mutex_unlock((*p).r.f));
-	pthread_mutex_lock((*p).l.f);
+	take_forks(p);
 	if (!check_death(p))
 		print_action_eat(p);
-	else
-	{
-		pthread_mutex_unlock((*p).l.f);
-		return (pthread_mutex_unlock((*p).r.f));
-	}
 	(*p).last_eat = time_now(p);
-	if (philo_sleep(p, (*p).data.t_eat))
+	if (philo_sleep(p, (*p).data->t_eat))
 		return (1);
-	pthread_mutex_unlock((*p).r.f);
-	pthread_mutex_unlock((*p).l.f);
+	philo_drop_forks(p);
 	return (0);
 }
 
@@ -55,31 +70,15 @@ int	philo_sleep(t_philo *p, unsigned long action)
 	unsigned long	t_passed;
 
 	t_passed = 0;
-	s_start = time_now(p) * 1000;
-	while (!check_add_death(p) && !(t_passed >= action * 1000))
+	s_start = time_now(p);
+	while (!check_add_death(p) && !(t_passed >= action))
 	{
 		if (check_death(p))
 			return (1);
 		usleep(100);
-		t_passed = time_now(p) * 1000 - s_start;
+		t_passed = time_now(p) - s_start;
 	}
-	if (t_passed >= action * 1000)
+	if (t_passed >= action)
 		return (0);
 	return (1);
-}
-
-void	print_action_eat(t_philo *p)
-{
-	pthread_mutex_lock((*p).print);
-	printf("%lu %d %s", time_now(p), (*p).nbr, "has taken a fork\n");
-	printf("%lu %d %s", time_now(p), (*p).nbr, "is eating\n");
-	pthread_mutex_unlock((*p).print);
-}
-
-//prints: "(timestamp_in_ms) (philo_nbr) (message)"
-void	print_action(t_philo *p, char *message)
-{
-	pthread_mutex_lock((*p).print);
-	printf("%lu %d %s", time_now(p), (*p).nbr, message);
-	pthread_mutex_unlock((*p).print);
 }

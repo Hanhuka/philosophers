@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:53:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/15 17:00:50 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:12:53 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,19 @@ unsigned long	time_ms(void)
 
 unsigned long	time_now(t_philo *p)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000) - (*p).t_start);
+	return (time_ms() - (*p).data->start);
 }
 
 int	check_add_death(t_philo *p)
 {
 	if (check_death(p))
 		return (1);
-	if (time_now(p) - (*p).last_eat >= (*p).data.t_die)
+	if (time_now(p) - (*p).last_eat >= (*p).data->t_die)
 	{
 		pthread_mutex_lock((*p).d_check);
 		(*((*p).dead))++;
-		print_action(p, "died\n");
+		if ((*((*p).dead)) == 1)
+			print_action(p, "died\n");
 		pthread_mutex_unlock((*p).d_check);
 		return (1);
 	}
