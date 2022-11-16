@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:59:19 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/16 17:05:18 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:12:10 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	*philo_routine(void *phil)
 
 	p = ((t_philo *)phil);
 	p->last_eat = 0;
-	if ((*p).nbr % 2)
-		usleep(50000);
+	if (!((*p).nbr % 2))
+		usleep(10000);
 	while (!check_add_death(p))
 	{
 		philo_eat(p);
