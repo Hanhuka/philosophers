@@ -6,12 +6,12 @@
 #    By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/05 14:54:26 by ralves-g          #+#    #+#              #
-#    Updated: 2022/11/16 16:30:10 by ralves-g         ###   ########.fr        #
+#    Updated: 2022/11/16 17:06:21 by ralves-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	gcc
-FLAGS		=	-Wall -Wextra -Werror #-fsanitize=thread	 -g
+FLAGS		=	-Wall -Wextra -Werror #-fsanitize=address	 -g
 RM			=	rm -f
 
 NAME		=	philo

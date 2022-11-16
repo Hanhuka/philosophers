@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:55:32 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/16 16:31:55 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:56:27 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ static void	allocate_philos(t_philo **p, t_data *d, t_forks **forks, int *dead)
 	int			i;
 
 	i = -1;
-	while (++i < d->n_phil)
-		(*p) = malloc(sizeof(t_philo) * d->n_phil);
+	(*p) = malloc(sizeof(t_philo) * d->n_phil);
 	i = -1;
 	while (++i < d->n_phil)
 	{
