@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 13:59:19 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/16 17:12:10 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:32:45 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	*philo_routine(void *phil)
 	while (!check_add_death(p))
 	{
 		philo_eat(p);
+		if (p->data->n_eat != -1 && p->times_eat == p->data->n_eat)
+			break ;
 		if (!check_add_death(p))
 			print_action(p, "is sleeping\n");
 		philo_sleep(p, (*p).data->t_sleep);

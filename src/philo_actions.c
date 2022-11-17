@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:48:23 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/16 16:30:25 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:33:08 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	philo_eat(t_philo *p)
 	take_forks(p);
 	if (!check_death(p))
 		print_action_eat(p);
+	(*p).times_eat++;
 	(*p).last_eat = time_now(p);
 	if (philo_sleep(p, (*p).data->t_eat))
 		return (1);

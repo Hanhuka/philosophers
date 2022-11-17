@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:55:32 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/11/16 17:12:53 by ralves-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:31:16 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	allocate_philos(t_philo **p, t_data *d, t_forks **forks, int *dead)
 		(*p)[i].dead = dead;
 		(*p)[i].nbr = i + 1;
 		(*p)[i].r = (*forks)[i];
+		(*p)[i].times_eat = 0;
 		if (i == 0)
 			(*p)[i].l = (*forks)[d->n_phil - 1];
 		else
